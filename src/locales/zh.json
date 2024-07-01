@@ -73,5 +73,7 @@
   "ts_table_no_empty": "表名不能为空",
   "ts_field_name_no_empty": "字段名字不能为空",
   "ts_empty_date": "暂无数据",
-  "ts_success": "解析完成"
+  "ts_success": "解析完成",
+  "备注": "备注"
+
 }

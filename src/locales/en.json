@@ -74,5 +74,7 @@
   "间隔": "Interval",
   "天": "Days",
   "请选择时间": "Please Select Time",
-  "请选择日期范围": "Please Select Date Range"
+  "请选择日期范围": "Please Select Date Range",
+  "备注": "remark"
+
 }

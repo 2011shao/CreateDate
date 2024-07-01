@@ -98,6 +98,13 @@
       :preSetArr="[t('选择表')]"
     ></SelectTableView>
     <SelectFieldView
+      :title="t('备注')"
+      canAdd
+      :typeNumArr="[1]"
+      v-model="export_filed_dic.remark_filed"
+      :allFieldDic="export_filed_dic"
+    ></SelectFieldView>
+    <SelectFieldView
       :title="t('开始日期')"
       canAdd
       :typeNumArr="[5]"
@@ -249,7 +256,8 @@ async function importData(isPrew) {
 
   for (let item of prewArr.value) {
     let fields = {};
-
+    debugger
+    fields[export_filed_dic.value["remark_filed"]]=item.remark
     fields[export_filed_dic.value["start_date_filed"]] = dayjs(
       item.times[0]
     ).valueOf();

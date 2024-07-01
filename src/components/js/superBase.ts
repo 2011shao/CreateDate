@@ -18,7 +18,8 @@ const export_table_id = ref(""); //导出人员时的表
 const export_filed_dic=ref({
   start_date_filed:"",
   end_date_filed:"",
-  week_filed:""
+  week_filed:"",
+  remark_filed:""
 })
 bitable.base.onSelectionChange((event) => {
   if (event.data.tableId != bit_select_dic.value.tableId) {

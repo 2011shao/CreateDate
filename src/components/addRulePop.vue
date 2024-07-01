@@ -31,6 +31,12 @@
       <div class="grid-one m-t-10">
         <div class="row-start-center">
           <a-typography-text class="labelClass">{{
+            t("备注")
+          }}</a-typography-text>
+          <a-input v-model="configDic.remark" :placeholder='t("备注")'></a-input>
+        </div>
+        <div class="row-start-center">
+          <a-typography-text class="labelClass">{{
             t("选择规律")
           }}</a-typography-text>
           <a-radio-group v-model="configDic.selectRuleType">
@@ -157,6 +163,7 @@ const { t } = useI18n();
 dayjs.extend(weekday);
 const configDic = ref({
   selectRuleType: "week",
+  remark: "",
   input_selectWeek: [], //选中的周
   input_spaceDayNum: 1, //间隔天数
   is_time_range: true, //false 时间端  true
@@ -298,7 +305,7 @@ function create_from_week(configArr, ty_config = { week_merge: false }) {
     }
     let num = 0;
     while (loopCondition(num)) {
-      const dicc = { times: [], week: "" };
+      const dicc = { times: [], week: "",remark: dic.remark};
       let curDate = dayjs(startDate).add(num, "d").format("YYYY-MM-DD");
       const weekNum = dayjs(curDate).day();
       if (dic.selectRuleType == "week") {
@@ -343,6 +350,7 @@ function create_from_week(configArr, ty_config = { week_merge: false }) {
 
 // 统一创建
 function ty_create_from_week(configArr, ty_config) {
+  debugger
   // 限制条数
   let arr = [];
   let week_merge_date = {};
@@ -374,11 +382,11 @@ function ty_create_from_week(configArr, ty_config) {
           curDate = dayjs(startDate).add(num, "d").format("YYYY-MM-DD");
           weekNum = dayjs(curDate).day();
           num++;
+          // 强顺序
           if (ty_config.model == 1) {
             all_input_selectWeek = [dic];
           }
           // 找到对应的周
-
           const findItem = all_input_selectWeek.find((a) =>
             a.input_selectWeek.includes(weekNum)
           );
@@ -397,7 +405,7 @@ function ty_create_from_week(configArr, ty_config) {
                   .format("YYYY-MM-DD");
                 week_merge_date = {};
                 // if (ty_config.model == 1) {
-                num = lastDic.num;
+                // num = lastDic.num;
                 // }
               }
             }
@@ -417,7 +425,7 @@ function ty_create_from_week(configArr, ty_config) {
                 week_merge_date[weekNum] = { date: curDate, weekNum: weekNum };
               }
             }
-            const dicc = { times: [], week: "", num: num };
+            const dicc = { times: [], week: "", num: num,remark: dic.remark };
             if (dic.is_time_range) {
               dicc.times.push(curDate + " " + findItem.input_time_range[0]);
               dicc.times.push(curDate + " " + findItem.input_time_range[1]);
@@ -432,13 +440,13 @@ function ty_create_from_week(configArr, ty_config) {
             if (loopCondition()) {
               findItem["sort"] = num;
               // 排序解决同样周的问题
-              all_input_selectWeek = all_input_selectWeek.sort((a, b) => {
-                if (a - b > 0) {
-                  return 1;
-                } else {
-                  return -1;
-                }
-              });
+              // all_input_selectWeek = all_input_selectWeek.sort((a, b) => {
+              //   if (a - b > 0) {
+              //     return 1;
+              //   } else {
+              //     return -1;
+              //   }
+              // });
               arr.push(dicc);
             }
           }
@@ -449,7 +457,7 @@ function ty_create_from_week(configArr, ty_config) {
       } else {
         curDate = dayjs(startDate).add(num, "d").format("YYYY-MM-DD");
         weekNum = dayjs(curDate).day();
-        const dicc = { times: [], week: "" };
+        const dicc = { times: [], week: "" ,remark: dic.remark};
         // 如果是日规律 则循环一次
         if (dic.is_time_range) {
           dicc.times.push(curDate + " " + dic.input_time_range[0]);
